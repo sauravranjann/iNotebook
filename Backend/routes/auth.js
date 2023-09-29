@@ -4,8 +4,10 @@ const router = express.Router(); // to use express router
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs'); // to use bcryptjs
 var  jwt = require('jsonwebtoken'); // to use jsonwebtoken
+var fetchuser = require('../middleware/fetchuser'); // to use fetchuser middleware
 
-const JWT_SECRET = 'sauravranjan';
+
+const JWT_SECRET = 'sauravranjan';// to create a secret key for jsonwebtoken
 
 router.post('/createuser',[
     body('name', 'Enter a valid name').isLength({ min: 3 }),
@@ -43,7 +45,7 @@ router.post('/createuser',[
     res.json({authToken}); // to send the token to the user 
     
     
-
+//route 2:
 // Authenticate a user using: POST "/api/auth/login". No login required
 //validate user
     router.post('/login',[
@@ -80,5 +82,22 @@ router.post('/createuser',[
     }
 });
 })
+
+// Route 3: Get loggedin User Details using: POST "/api/auth/getuser". Login required
+
+router.post('/getuser',fetchuser,async (req, res) => {
+    try {
+        userId = req.user.id;// to get the user id from the req.user
+        const user = await User.findById(userId).select("-password");// to find the user by id and select all the details except password
+        res.send(user);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");   
+    }
+}
+)
+ 
+
+
 
 module.exports = router;// to export the router

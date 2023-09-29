@@ -1,10 +1,26 @@
 const mongoose = require('mongoose');
+const { Schema } =mongoose;
 
 const NotesSchema = new Schema({
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    tag: { type: String, required: true },
-    date: { type: String, default: Date.now },
+    user: { 
+        type: mongoose.Schema.Types.ObjectId, //this is the id of the user who is logged in
+        ref: 'user' //this is the name of the collection from which we are referring the id
+    },
+    title: { 
+        type: String,
+         required: true 
+        },
+    description:{ 
+        type: String,
+         required: true
+        },
+    tag: { 
+        type: String, 
+        required: true },
+    date: { 
+        type: String, 
+        default: Date.now 
+    },
 });
 
 module.exports = mongoose.model('notes', NotesSchema);
