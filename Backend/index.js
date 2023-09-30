@@ -3,7 +3,7 @@ const express = require('express');// express is a framework for nodejs
 
 connectToMongo(); // connect to MongoDB
 const app = express();
-const port = 3000;
+const port = 5000;
 
 
 // Available Routes
