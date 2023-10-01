@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NoteState from "./context/notes/NotesState";
 import Alerts from "./components/Alerts";
 
+
 function App() {
   return (
     <>
