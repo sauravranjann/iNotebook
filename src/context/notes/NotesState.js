@@ -49,27 +49,29 @@ const NoteState = (props) => {
       date: "2021-09-03T14:20:09.668Z",
       __v: 0,
     };
-    setNotes(Array.isArray(notes) ? [...notes, note] : [note]);
+    setNotes([note]);
   };
 
-  // Delete a Note
   const deleteNote = async (id) => {
     // TODO: API Call
-    const response = fetch(`${host}/api/notes/deletenote/${id}`, {
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("token"),
       },
     });
-    const json = response.json();
-    console.log(json);
-
-    console.log("Deleting the note with id" + id);
-    const newNotes = notes.filter((note) => {
-      return note._id !== id;
-    });
-    setNotes(newNotes);
+    const data = await response.text();
+    console.log(data);
+    if (response.status === 200) {
+      const newNotes = notes.filter((note) => {
+        return note._id !== id;
+      });
+      setNotes(newNotes);
+      showAlert("Note deleted successfully", "success");
+    } else {
+      showAlert("Error deleting note", "danger");
+    }
   };
   // Edit a Note
   const editNote = async (id, title, description, tag) => {

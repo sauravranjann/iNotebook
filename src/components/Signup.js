@@ -25,9 +25,9 @@ let navigate = useNavigate();
    console.log(json);
    if (json.success) {
      // Save the auth token and redirect
-     localStorage.setItem("token", json.authtoken);
-      props.showAlert("Account Created Successfully" , "success")
-     navigate("/home");
+    localStorage.setItem("token", json.authtoken);
+    props.showAlert("Account Created Successfully" , "success")
+    navigate("/home");
    }
    else{
       props.showAlert("Invalid Credentials" , "danger")
